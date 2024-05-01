@@ -66,7 +66,7 @@ class Solution {
     struct Node* arrangeCV(Node* head) 
     {
        Node* temp = head;
-       Node* dummy = new Node(-1);
+       Node* dummy = new Node('0');
        dummy->next = NULL;
        Node* head2 = dummy;
 
