@@ -8,34 +8,41 @@ class Solution {
   public:
     bool canSplit(vector<int>& arr) {
         
+        int n = arr.size() , i = 1 , j = n-2, sum1 = arr[0] , sum2 = arr[n-1];
+        if(n == 1) return false;
         
-        long long n = arr.size() , sum = 0;
-        
-        vector<int> presum(n) , sufsum(n);
-        
-        for(int i=0;i<n;i++) 
+        while(i<j)
         {
-            sum += arr[i];
-            presum[i] = sum;
+            if(sum1 < sum2)
+            {
+                while(i<j && sum2 > sum1)
+                {
+                    sum1 += arr[i];
+                    i++;
+                }
+            }
+            else if(sum1 > sum2)
+            {
+                while(j>i && sum1 > sum2)
+                {
+                    sum2 += arr[j];
+                    j--;
+                }
+            }
+            else 
+            {
+                sum1 += arr[i];
+                sum2 += arr[j];
+                i++;
+                j--;
+            }
         }
         
-        sum = 0;
+        if(i == j && sum1+arr[i] == sum2 || sum2+arr[j] == sum1) return true;
+        else if(i != j && sum1 == sum2) return true;
+        else return false;
         
-        for(int i=n-1;i>=0;i--)
-        {
-            sum += arr[i];
-            sufsum[i] = sum;
-        }
-        
-        for(int i=0;i<n-1;i++)
-        {
-            if(presum[i] == sufsum[i+1]) return true;
-        }
-        
-        return false;
     }
-    
-    
 };
 
 
