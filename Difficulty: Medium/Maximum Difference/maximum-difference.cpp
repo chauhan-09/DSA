@@ -11,7 +11,7 @@ class Solution {
         
         int n = arr.size() , maxi = -1;
         vector<int> left(n) , right(n);
-        stack<int> s;
+        stack<int> s , s2;
         
         for(int i=0;i<n;i++)
         {
@@ -22,10 +22,7 @@ class Solution {
             }
             else 
             {
-                while(s.size() > 0 && arr[i] <= s.top())
-                {
-                    s.pop();
-                }
+                while(s.size() > 0 && arr[i] <= s.top()) s.pop();
                 
                 if(s.size() > 0) left[i] = s.top();
                 else left[i] = 0;
@@ -33,8 +30,6 @@ class Solution {
                 s.push(arr[i]);
             }
         }
-        
-        stack<int> s2;
         
         for(int i=n-1;i>=0;i--)
         {
@@ -45,10 +40,7 @@ class Solution {
             }
             else 
             {
-                while(s2.size() > 0 && arr[i] <= s2.top())
-                {
-                    s2.pop();
-                }
+                while(s2.size() > 0 && arr[i] <= s2.top()) s2.pop();
                 
                 if(s2.size() > 0) right[i] = s2.top();
                 else right[i] = 0;
@@ -57,11 +49,8 @@ class Solution {
             }
         }
         
-        for(int i=0;i<n;i++)
-        {
-            maxi = max(maxi,abs(right[i] - left[i]));
-        }
-        
+        for(int i=0;i<n;i++) maxi = max(maxi,abs(right[i] - left[i]));
+
         return maxi;
         
         
