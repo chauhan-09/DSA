@@ -6,25 +6,24 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-  
-    int jump(vector<int> &arr,vector<int> &dp , int n , int indx)
+
+    int solve(vector<int> &arr,int i,vector<int> &dp)
     {
-        if(indx >= n-1) return 0;
+        if(i >= arr.size()-1) return 0;
+        int one_step = INT_MAX , two_step = INT_MAX;
+        if(dp[i] != -1) return dp[i];
         
-        if(dp[indx] != -1) return dp[indx];
+        if(i < arr.size()-1) one_step = abs(arr[i] - arr[i+1]) + solve(arr,i+1,dp);
+        if(i < arr.size()-2) two_step = abs(arr[i] - arr[i+2]) + solve(arr,i+2,dp);
         
-        int one_step;
-        one_step = jump(arr,dp,n,indx+1) + abs(arr[indx] - arr[indx+1]);
-        int two_step = INT_MAX;
-        if(indx < n-2) two_step = jump(arr,dp,n,indx+2) + abs(arr[indx] - arr[indx+2]);
-        
-        return dp[indx] = min(one_step,two_step);
+        return dp[i] = min(one_step,two_step);
     }
     
-    int minimumEnergy(vector<int>& arr , int n) 
-    {
-       vector<int> dp(n,-1);
-       return jump(arr,dp,n,0);
+    
+    int minimumEnergy(vector<int>& arr, int n) {
+        
+        vector<int> dp(n,-1);
+        return solve(arr,0,dp);
     }
 };
 
