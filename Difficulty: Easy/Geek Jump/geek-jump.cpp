@@ -6,24 +6,22 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-
-    int solve(vector<int> &arr,int i,vector<int> &dp)
+    int dp[100001] = {0};
+    int solve(vector<int> &arr,int i)
     {
         if(i >= arr.size()-1) return 0;
-        int one_step = INT_MAX , two_step = INT_MAX;
-        if(dp[i] != -1) return dp[i];
         
-        if(i < arr.size()-1) one_step = abs(arr[i] - arr[i+1]) + solve(arr,i+1,dp);
-        if(i < arr.size()-2) two_step = abs(arr[i] - arr[i+2]) + solve(arr,i+2,dp);
+        if(dp[i] != 0) return dp[i];
+        
+        int one_step = INT_MAX , two_step = INT_MAX;
+        
+        one_step = abs(arr[i] - arr[i+1]) + solve(arr,i+1);
+        if(i < arr.size()-2) two_step = abs(arr[i] - arr[i+2]) + solve(arr,i+2);
         
         return dp[i] = min(one_step,two_step);
     }
-    
-    
     int minimumEnergy(vector<int>& arr, int n) {
-        
-        vector<int> dp(n,-1);
-        return solve(arr,0,dp);
+        return solve(arr,0);
     }
 };
 
