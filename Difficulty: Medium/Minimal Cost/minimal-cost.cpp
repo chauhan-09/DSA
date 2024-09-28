@@ -10,27 +10,26 @@ class Solution {
     
     int solve(vector<int> &arr,int i,int k)
     {
-        if(i >= arr.size()-1) return 0;
-        
+        if(i >= arr.size() - 1) return 0;
         if(dp[i] != -1) return dp[i];
-        
-        int cost = INT_MAX , mini = INT_MAX;
+        int mini = INT_MAX;
         
         for(int j=1;j<=k;j++)
         {
             if(i+j < arr.size())
             {
-                cost = abs(arr[i] - arr[i+j]) + solve(arr,i+j,k);
+                int cost = abs(arr[i] - arr[i+j]) + solve(arr,i+j,k);
                 mini = min(mini,cost);
             }
         }
         
         return dp[i] = mini;
     }
-    int minimizeCost(vector<int>& arr, int& k) {
-        
-        memset(dp,-1,sizeof(dp));
-        return solve(arr,0,k);
+    int minimizeCost(int k, vector<int>& arr) {
+       
+       memset(dp,-1,sizeof(dp));
+       return solve(arr,0,k);
+       
     }
 };
 
@@ -53,7 +52,7 @@ int main() {
             arr.push_back(number);
         }
         Solution obj;
-        int res = obj.minimizeCost(arr, k);
+        int res = obj.minimizeCost(k, arr);
         cout << res << endl;
         // string tl;
         // getline(cin, tl);
